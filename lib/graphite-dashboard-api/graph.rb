@@ -19,7 +19,6 @@ module GraphiteDashboardApi
       URI::encode(@targets.first)
     end
 
-
     def render_options(default_options)
       opts = []
       PROPS.each do |k|
@@ -30,13 +29,11 @@ module GraphiteDashboardApi
       opts.join('&')
     end
 
-
     def target_encode
       @targets.map do |target|
         "target=" + URI::encode(target)
       end.join('&')
     end
-
 
     def to_hash
       hash = Hash.new
@@ -48,6 +45,5 @@ module GraphiteDashboardApi
       hash['title'] = @title if @title
       hash
     end
-
   end
 end
