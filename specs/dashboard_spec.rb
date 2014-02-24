@@ -5,13 +5,15 @@ require 'json'
 describe GraphiteDashboardApi::Dashboard do
 
   it 'can be constructed to json' do
-    graph = GraphiteDashboardApi::Graph.new "title"
-    graph.from = "-5minutes"
-    graph.until = "now"
+    graph = GraphiteDashboardApi::Graph.new "title" do
+      from "-5minutes"
+      until_ "now"
+    end
     graph.targets << 'storage.rsyslog.action1.processed.kestrel01-am5'
-    graph2 = GraphiteDashboardApi::Graph.new nil
-    graph2.from = "-5minutes"
-    graph2.until = "now"
+    graph2 = GraphiteDashboardApi::Graph.new nil do
+      from "-5minutes"
+      until_ "now"
+    end
     graph2.targets << 'storage.rsyslog.action1.processed.bungee03-am5'
     dashboard = GraphiteDashboardApi::Dashboard.new "remove_me"
     dashboard.graphs << graph

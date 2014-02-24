@@ -4,11 +4,24 @@ module GraphiteDashboardApi
   class Graph
     attr_accessor :title, :targets
     PROPS = %i(from until width height)
-    PROPS.each do |a| attr_accessor a end
+    PROPS.each do |a|
+      attr_accessor a
+      define_method(a) do |arg=nil|
+      if arg
+        instance_variable_set("@#{a}".to_sym, arg)
+      else
+        instance_variable_get "@#{a}".to_sym
+      end
+      end
+      define_method((a.to_s + '_').to_sym) do |arg=nil|
+      self.send(a, arg)
+      end
+    end
 
-    def initialize(title)
+    def initialize(title, &block)
       @title = title
       @targets = []
+      self.instance_eval(&block) if block
     end
 
     def url(default_options)
