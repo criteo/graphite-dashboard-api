@@ -21,8 +21,8 @@ describe GraphiteDashboardApi::Graph do
     graph = GraphiteDashboardApi::Graph.new "title" do
       from "-5minutes"
       until_ 'now'
+      targets ['storage.rsyslog.action1.processed.kestrel01-am5']
     end
-    graph.targets << 'storage.rsyslog.action1.processed.kestrel01-am5'
     expect(graph.target_encode).to eq "target=storage.rsyslog.action1.processed.kestrel01-am5"
     expect(JSON.parse(JSON.generate(graph.to_hash))).to eq expected_json
   end
@@ -32,8 +32,8 @@ describe GraphiteDashboardApi::Graph do
     graph = GraphiteDashboardApi::Graph.new nil do
       from "-5minutes"
       until_ 'now'
+      targets ['storage.rsyslog.action1.processed.kestrel01-am5']
     end
-    graph.targets << 'storage.rsyslog.action1.processed.kestrel01-am5'
     expect(graph.target_encode).to eq "target=storage.rsyslog.action1.processed.kestrel01-am5"
     expect(JSON.parse(JSON.generate(graph.to_hash))).to eq expected_json
   end

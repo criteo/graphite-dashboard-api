@@ -29,6 +29,13 @@ module GraphiteDashboardApi
       'graphSize' => GRAPH_SIZE,
     }
 
+    def graphs(arg=nil)
+      if arg
+        @graphs = arg
+      end
+      @graphs
+    end
+
     OPTIONS.each do |k,options|
       options.each do |v|
         accessor_name = k + '_' + v.to_s
