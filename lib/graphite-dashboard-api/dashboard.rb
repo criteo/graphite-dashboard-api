@@ -1,5 +1,8 @@
 module GraphiteDashboardApi
   class Dashboard
+
+    include Api
+
     attr_accessor :name
     attr_accessor :graphs
     attr_accessor :stringify_graphSize
@@ -94,5 +97,28 @@ module GraphiteDashboardApi
       hash = { 'state' => state }
       hash
     end
+
+    def from_hash!(hash)
+      state = hash['state']
+      @name = state['name']
+      OPTIONS.each do |k,options|
+        if state[k]
+          options.each do |kk|
+            value = state[k][kk.to_s]
+            instance_variable_set("@#{k}_#{kk}".to_sym, value) if value
+          end
+        end
+      end
+      if state['graphs']
+        state['graphs'].each do |graph_entry|
+          fail "Graph entry is supposed to have 3 elements" unless graph_entry.size.eql? 3
+          graph = graph_entry[1]
+          new_graph = Graph.new
+          new_graph.from_hash!(graph)
+          @graphs << new_graph
+        end
+      end
+    end
+
   end
 end

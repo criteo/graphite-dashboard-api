@@ -75,5 +75,18 @@ module GraphiteDashboardApi
       hash['target'] = @targets
       hash
     end
+
+    def from_hash!(hash)
+      @title = hash['title']
+      PROPS.each do |k|
+        value = hash[k.to_s]
+        instance_variable_set("@#{k}".to_sym, value) if value
+      end
+      if hash['target']
+        hash['target'].each do |target|
+          @targets << target
+        end
+      end
+    end
   end
 end
