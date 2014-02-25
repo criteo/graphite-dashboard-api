@@ -2,6 +2,7 @@ module GraphiteDashboardApi
   class Dashboard
     attr_accessor :name
     attr_accessor :graphs
+    attr_accessor :stringify_graphSize
 
     def initialize(name, &block)
       @name = name
@@ -14,6 +15,7 @@ module GraphiteDashboardApi
       @refreshConfig_enabled  = false
       @graphSize_width        = 400
       @graphSize_height       = 250
+      @stringify_graphSize    = false #tweaking option
 
       #default timeConfig
       @timeConfig_type = "relative"
@@ -41,6 +43,13 @@ module GraphiteDashboardApi
       'timeConfig' => TIME_CONFIG,
       'graphSize' => GRAPH_SIZE,
     }
+
+    def stringify_graphSize(arg=nil)
+      if arg
+        @stringify_graphSize = arg
+      end
+      @stringify_graphSize
+    end
 
     def graphs(arg=nil)
       if arg
@@ -73,6 +82,7 @@ module GraphiteDashboardApi
         state[k] = Hash.new
         options.each do |kk|
           state[k][kk.to_s] = instance_variable_get "@#{k}_#{kk}".to_sym
+          state[k][kk.to_s] = state[k][kk.to_s].to_s if (k.eql? 'graphSize' and @stringify_graphSize)
         end
       end
 

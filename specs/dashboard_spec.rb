@@ -89,8 +89,8 @@ describe GraphiteDashboardApi::Dashboard do
     dashboard = GraphiteDashboardApi::Dashboard.new "chef-storage" do
       defaultGraphParams_width '350'
       defaultGraphParams_height '250'
-      graphSize_width            '350'
-      graphSize_height           '250'
+      graphSize_width            350
+      stringify_graphSize        true
       defaultGraphParams_from   '-4days'
       timeConfig_relativeStartUnits 'days'
       timeConfig_relativeStartQuantity '4'
