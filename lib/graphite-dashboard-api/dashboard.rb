@@ -32,10 +32,10 @@ module GraphiteDashboardApi
       self.instance_eval(&block) if block
     end
 
-    DEFAULT_GRAPH_PARAMS = [:width :from :until :height]
-    REFRESH_CONFIG = [:interval :enabled]
-    TIME_CONFIG = [:startDate :relativeStartUnits :endDate :relativeStartQuantity :relativeUntilQuantity :startTime :endTime :type :relativeUntilUnits]
-    GRAPH_SIZE = [:width :height]
+    DEFAULT_GRAPH_PARAMS = [:width, :from, :until, :height]
+    REFRESH_CONFIG = [:interval, :enabled]
+    TIME_CONFIG = [:startDate, :relativeStartUnits, :endDate, :relativeStartQuantity, :relativeUntilQuantity, :startTime, :endTime, :type, :relativeUntilUnits]
+    GRAPH_SIZE = [:width, :height]
 
     OPTIONS = {
       'defaultGraphParams' => DEFAULT_GRAPH_PARAMS,

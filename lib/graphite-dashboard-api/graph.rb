@@ -2,7 +2,7 @@ require 'uri'
 
 module GraphiteDashboardApi
   class Graph
-    PROPS = [:from :until :width :height]
+    PROPS = [:from, :until, :width, :height]
     [PROPS, :targets, :titles, :compact_leading].flatten.each do |a|
       attr_accessor a
       define_method(a) do |arg=nil|
