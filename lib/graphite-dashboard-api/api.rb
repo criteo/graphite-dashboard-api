@@ -6,7 +6,7 @@ module GraphiteDashboardApi
   module Api
     #this mixin requires a from_hash! and to_hash methods + @name
     def save!(uri)
-      response = rest_request(uri, "save/#{@name}", :put)
+      response = rest_request(uri, "save/#{@name}", :post, to_hash)
       response
     end
 
@@ -15,16 +15,18 @@ module GraphiteDashboardApi
       self.from_hash!(response)
     end
 
-    def rest_request(uri, endpoint, method)
+    def rest_request(uri, endpoint, method, payload=nil)
       uri = "#{uri}/dashboard/#{endpoint}"
       begin
         r = RestClient::Request.new(
           :url          => uri,
-          :method       => :get,
+          :payload      => payload,
+          :method       => method,
           :timeout      => 2,
           :open_timeout => 2,
           :headers      => {
             :accept => :json,
+            :content_type => :json,
           }
         )
         response = r.execute
