@@ -14,6 +14,19 @@ module GraphiteDashboardApi
       @refreshConfig_enabled  = false
       @graphSize_width        = 400
       @graphSize_height       = 250
+
+      #default timeConfig
+      @timeConfig_type = "relative"
+      @timeConfig_relativeStartUnits = "minutes"
+      @timeConfig_relativeStartQuantity = '5'
+      @timeConfig_relativeUntilUnits = 'now'
+      @timeConfig_relativeUntilQuantity = ''
+
+      @timeConfig_startDate = "1970-01-01T00:00:00"
+      @timeConfig_endDate = "1970-01-01T00:05:00"
+      @timeConfig_startTime = '9:00AM'
+      @timeConfig_endTime  = '5:00PM'
+
       self.instance_eval(&block) if block
     end
 
