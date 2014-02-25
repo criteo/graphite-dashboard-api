@@ -11,7 +11,7 @@ describe GraphiteDashboardApi::Dashboard do
       targets  ['storage.rsyslog.action1.processed.kestrel01-am5']
     end
 
-    graph2 = GraphiteDashboardApi::Graph.new nil do
+    graph2 = GraphiteDashboardApi::Graph.new do
       from    "-5minutes"
       until_  "now"
       targets ['storage.rsyslog.action1.processed.bungee03-am5']

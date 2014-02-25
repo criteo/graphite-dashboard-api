@@ -17,7 +17,7 @@ module GraphiteDashboardApi
       end
     end
 
-    def initialize(title, &block)
+    def initialize(title=nil, &block)
       @title = title
       @targets = []
       self.instance_eval(&block) if block
