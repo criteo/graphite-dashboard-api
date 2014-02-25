@@ -77,13 +77,8 @@ module GraphiteDashboardApi
       end
 
       state['graphs'] = @graphs.map do |graph|
-        if graph.targets.size == 1
-          leading_entries = "target=#{graph.targets[0]}"
-        else
-          leading_entries = graph.target_encode#graph.targets
-        end
 
-        [ leading_entries, graph.to_hash, graph.url(state['graphSize'])]
+        [ graph.leading_entries, graph.to_hash, graph.url(state['graphSize'])]
       end
 
       hash = { 'state' => state }

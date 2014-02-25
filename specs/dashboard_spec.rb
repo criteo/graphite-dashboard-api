@@ -64,6 +64,7 @@ describe GraphiteDashboardApi::Dashboard do
     success_failure = GraphiteDashboardApi::Graph.new 'Success & failure' do
         from   '-4days'
         until_ 'now'
+        compact_leading true
         targets [
           "hitcount(sumSeries(storage.chef.{kestrel,bungee}*.fail),\"30min\")",
           "hitcount(sumSeries(storage.chef.{graphite,squirrel}*.fail),\"30min\")",

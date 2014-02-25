@@ -3,7 +3,7 @@ require 'uri'
 module GraphiteDashboardApi
   class Graph
     PROPS = %i(from until width height)
-    [PROPS, :targets, :titles].flatten.each do |a|
+    [PROPS, :targets, :titles, :compact_leading].flatten.each do |a|
       attr_accessor a
       define_method(a) do |arg=nil|
       if arg
@@ -20,6 +20,7 @@ module GraphiteDashboardApi
     def initialize(title=nil, &block)
       @title = title
       @targets = []
+      @compact_leading = false #this is tweaking stuff
       self.instance_eval(&block) if block
     end
 
@@ -43,7 +44,19 @@ module GraphiteDashboardApi
     end
 
     def my_unsafe
-      Regexp.union(URI::UNSAFE, /[,&]/)
+      Regexp.union(URI::UNSAFE, /[,&+]/)
+    end
+
+    def leading_entries
+      if @targets.size == 1
+        leading_entries = "target=#{@targets[0]}"
+      else
+        if @compact_leading
+          leading_entries = target_encode
+        else
+          leading_entries = @targets
+        end
+      end
     end
 
     def target_encode
