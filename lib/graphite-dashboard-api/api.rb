@@ -6,7 +6,8 @@ module GraphiteDashboardApi
   module Api
     #this mixin requires a from_hash! and to_hash methods + @name
     def save!(uri)
-      puts "toto"
+      response = rest_request(uri, "save/#{@name}", :put)
+      response
     end
 
     def load(uri, name=nil)
