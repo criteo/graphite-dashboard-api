@@ -8,6 +8,21 @@ def comparison_by_block(dashboard, expected_json)
     expect(result[k]).to eq v
   end
   expect(JSON.parse(JSON.generate(dashboard.to_hash))).to eq expected_json
+
+  # also check idempotency of (to_hash o from_hash)
+  # we have to be careful with tweaking options
+  new_dashboard = GraphiteDashboardApi::Dashboard.new
+  new_dashboard.from_hash! dashboard.to_hash
+  expect(new_dashboard.graphs.size).to eq dashboard.graphs.size
+  dashboard.graphs.each_with_index do |el, index|
+    if el.compact_leading
+      new_dashboard.graphs[index].compact_leading = true
+    end
+  end
+  new_dashboard.to_hash['state'].each do |k,v|
+    expect(dashboard.to_hash['state'][k]).to eq v
+  end
+  expect(new_dashboard.to_hash).to eq dashboard.to_hash
 end
 
 

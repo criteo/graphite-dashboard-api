@@ -87,6 +87,7 @@ module GraphiteDashboardApi
           @targets << target
         end
       end
+      self
     end
   end
 end

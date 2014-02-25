@@ -7,7 +7,7 @@ module GraphiteDashboardApi
     attr_accessor :graphs
     attr_accessor :stringify_graphSize
 
-    def initialize(name, &block)
+    def initialize(name=nil, &block)
       @name = name
       @graphs = []
       @defaultGraphParams_width  = '800'
@@ -118,6 +118,7 @@ module GraphiteDashboardApi
           @graphs << new_graph
         end
       end
+      self
     end
 
   end
