@@ -24,8 +24,8 @@ module GraphiteDashboardApi
 
       @timeConfig_startDate = "1970-01-01T00:00:00"
       @timeConfig_endDate = "1970-01-01T00:05:00"
-      @timeConfig_startTime = '9:00AM'
-      @timeConfig_endTime  = '5:00PM'
+      @timeConfig_startTime = '9:00 AM'
+      @timeConfig_endTime  = '5:00 PM'
 
       self.instance_eval(&block) if block
     end
