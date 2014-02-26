@@ -3,4 +3,4 @@ rvm:
   - 1.9.3
   - 2.1.0
   - ruby-head
-script: bundle exec rspec specs
+script: bundle exec rspec
