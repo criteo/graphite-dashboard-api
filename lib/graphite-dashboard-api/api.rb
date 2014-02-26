@@ -4,14 +4,14 @@ require 'json'
 
 module GraphiteDashboardApi
   module Api
-    #this mixin requires a from_hash! and to_hash methods + @name
+    # this mixin requires a from_hash! and to_hash methods + @name
     def save!(uri)
       data = encode
       response = rest_request(uri, "save/#{@name}", :post, data)
       response
     end
 
-    def load!(uri, name=nil)
+    def load!(uri, name = nil)
       response = rest_request(uri, "load/#{name || @name}", :get)
       self.from_hash!(response)
     end
@@ -21,29 +21,29 @@ module GraphiteDashboardApi
       response['dashboards']
     end
 
-    def exists?(uri, name=nil)
+    def exists?(uri, name = nil)
       pattern = name || @name
-      search(uri, pattern).collect {|el| el['name'] }.include? (pattern)
+      search(uri, pattern).map { |el| el['name'] }.include? (pattern)
     end
 
     private
-    def rest_request(uri, endpoint, method, payload=nil)
+    def rest_request(uri, endpoint, method, payload = nil)
       uri = "#{uri}/dashboard/#{endpoint}"
       begin
         r = RestClient::Request.new(
-          :url          => uri,
-          :payload      => payload,
-          :method       => method,
-          :timeout      => 2,
-          :open_timeout => 2,
-          :headers      => {
-            :accept => :json,
-            :content_type => :json,
+          url: uri,
+          payload: payload,
+          method: method,
+          timeout: 2,
+          open_timeout: 2,
+          headers: {
+            accept: :json,
+            content_type: :json,
           }
         )
         response = r.execute
       rescue => e
-        fail "Rest client error: #{e}"
+        raise "Rest client error: #{e}"
       end
       if response.code != 200 || JSON.parse(response.body)['error']
         fail "Error calling dashboard API: #{response.code} #{response.body}"

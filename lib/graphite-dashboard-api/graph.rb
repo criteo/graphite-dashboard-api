@@ -5,30 +5,30 @@ module GraphiteDashboardApi
     PROPS = [:from, :until, :width, :height]
     [PROPS, :targets, :titles, :compact_leading].flatten.each do |a|
       attr_accessor a
-      define_method(a) do |arg=nil|
+      define_method(a) do |arg = nil|
       if arg
         instance_variable_set("@#{a}".to_sym, arg)
       else
         instance_variable_get "@#{a}".to_sym
       end
       end
-      define_method((a.to_s + '_').to_sym) do |arg=nil|
-      self.send(a, arg)
+      define_method((a.to_s + '_').to_sym) do |arg = nil|
+      send(a, arg)
       end
     end
 
-    def initialize(title=nil, &block)
+    def initialize(title = nil, &block)
       @title = title
       @targets = []
-      @compact_leading = false #this is tweaking stuff
-      self.instance_eval(&block) if block
+      @compact_leading = false # this is tweaking stuff
+      instance_eval(&block) if block
     end
 
     def url(default_options)
-      "/render?" + render_options(default_options) + '&' + target_encode + "&title=#{@title || default_title}"
+      '/render?' + render_options(default_options) + '&' + target_encode + "&title=#{@title || default_title}"
     end
 
-    #This is probably an over simplification TODO
+    # This is probably an over simplification TODO
     def default_title
       @targets.first
     end
@@ -53,12 +53,12 @@ module GraphiteDashboardApi
 
     def target_encode
       @targets.map do |target|
-        "target=" + target
+        'target=' + target
       end.join('&')
     end
 
     def to_hash
-      hash = Hash.new
+      hash = {}
       hash['title'] = @title if @title
       PROPS.each do |k|
         v = instance_variable_get "@#{k}".to_sym
