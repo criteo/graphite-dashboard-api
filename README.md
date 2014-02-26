@@ -1,6 +1,11 @@
 Graphite Dashboard API
 ----------------------
 
+[![Build Status](https://travis-ci.org/criteo/graphite-dashboard-api.png?branch=master)](https://travis-ci.org/criteo/graphite-dashboard-api)
+[![Gem Version](https://badge.fury.io/rb/graphite-dashboard-api.png)](http://badge.fury.io/rb/graphite-dashboard-api)
+[![Dependency Status](https://gemnasium.com/criteo/graphite-dashboard-api.png)](https://gemnasium.com/criteo/graphite-dashboard-api)
+
+
 Graphite dashboard api is a ruby gem which help to create and update graphite dashboards.
 
 It allows to create dashboard with code instead of long manipulations in graphite dashboard UI.
