@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Grégoire Seux"]
   s.license     = "Apache License v2"
   s.summary     = %q{DSL over graphite dashboard api}
-  s.homepage    = "http://github.com/kamaradclimber/graphite-dashboard-api"
+  s.homepage    = "http://github.com/criteo/graphite-dashboard-api"
   s.description = %q{}
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- spec/*`.split("\n")
