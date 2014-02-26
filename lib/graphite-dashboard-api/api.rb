@@ -16,6 +16,16 @@ module GraphiteDashboardApi
       self.from_hash!(response)
     end
 
+    def search(uri, pattern)
+      response = rest_request(uri, "find/?query=#{pattern}", :get)
+      response['dashboards']
+    end
+
+    def exists?(uri, name=nil)
+      pattern = name || @name
+      search(uri, pattern).collect {|el| el['name'] }.include? (pattern)
+    end
+
     private
     def rest_request(uri, endpoint, method, payload=nil)
       uri = "#{uri}/dashboard/#{endpoint}"
