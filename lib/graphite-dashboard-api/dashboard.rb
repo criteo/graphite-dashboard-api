@@ -121,5 +121,19 @@ module GraphiteDashboardApi
       self
     end
 
+    def encode
+      json = JSON.generate(to_hash['state'])
+      "state="+ URI::encode(json, my_unsafe)
+    end
+
+    def decode(encoded_string)
+      json = URI::decode(encoded_string[/=(.*)/,1], my_unsafe)
+      JSON.parse(json)
+    end
+
+    def my_unsafe
+      Regexp.union(URI::UNSAFE, /[,&+]/)
+    end
+
   end
 end

@@ -25,12 +25,12 @@ module GraphiteDashboardApi
     end
 
     def url(default_options)
-      "/render?" + render_options(default_options) + '&' + target_encode + "&title=#{URI::escape(@title || default_title, my_unsafe)}"
+      "/render?" + render_options(default_options) + '&' + target_encode + "&title=#{@title || default_title}"
     end
 
     #This is probably an over simplification TODO
     def default_title
-      URI::encode(@targets.first)
+      @targets.first
     end
 
     def render_options(default_options)
@@ -43,25 +43,17 @@ module GraphiteDashboardApi
       opts.join('&')
     end
 
-    def my_unsafe
-      Regexp.union(URI::UNSAFE, /[,&+]/)
-    end
-
     def leading_entries
-      if @targets.size == 1
-        leading_entries = "target=#{@targets[0]}"
+      if @compact_leading
+        leading_entries = target_encode
       else
-        if @compact_leading
-          leading_entries = target_encode
-        else
-          leading_entries = @targets
-        end
+        leading_entries = @targets
       end
     end
 
     def target_encode
       @targets.map do |target|
-        "target=" + URI::escape(target, my_unsafe)
+        "target=" + target
       end.join('&')
     end
 
