@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    graphite-dashboard-api (0.1.0)
+    graphite-dashboard-api (0.2.0)
       rest-client
 
 GEM
