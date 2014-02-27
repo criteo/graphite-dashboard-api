@@ -2,6 +2,7 @@ require 'uri'
 
 module GraphiteDashboardApi
   class Graph
+    attr_accessor :extra_options
     PROPS = [:from, :until, :width, :height]
     [PROPS, :targets, :titles, :compact_leading].flatten.each do |a|
       attr_accessor a
@@ -17,10 +18,18 @@ module GraphiteDashboardApi
       end
     end
 
+    def method_missing(m, *args)
+      if args && args.size > 0
+        @extra_options[m.to_s] = args[0]
+      end
+      @extra_options[m.to_s]
+    end
+
     def initialize(title = nil, &block)
       @title = title
       @targets = []
       @compact_leading = false # this is tweaking stuff
+      @extra_options = {}
       instance_eval(&block) if block
     end
 
@@ -65,6 +74,7 @@ module GraphiteDashboardApi
         hash[k.to_s] = v if v
       end
       hash['target'] = @targets
+      hash.merge!(extra_options_to_hash)
       hash
     end
 
@@ -79,7 +89,26 @@ module GraphiteDashboardApi
           @targets << target
         end
       end
+      extra_options_from_hash!(hash)
       self
     end
+
+    def extra_options_to_hash
+      hash = {}
+      @extra_options.each do |k,v|
+        hash[k.to_s] = v
+      end
+      hash
+    end
+
+    def extra_options_from_hash!(hash)
+      std_options = ['title', 'target', PROPS].map { |k| k.to_s }
+      extra_options = hash.keys - std_options
+      extra_options.each do |k|
+        @extra_options[k] = hash[k]
+      end
+      self
+    end
+
   end
 end

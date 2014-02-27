@@ -51,4 +51,17 @@ describe GraphiteDashboardApi::Graph do
     new_graph = GraphiteDashboardApi::Graph.new
     expect((new_graph.from_hash! graph.to_hash).to_hash).to eq graph.to_hash
   end
+
+  it 'can have extra options' do
+    graph = GraphiteDashboardApi::Graph.new 'test' do
+      an_other_option 5
+    end
+    expect(graph.an_other_option).to eq 5
+    h = graph.to_hash
+    expect(h['an_other_option']).to eq 5
+    graph2 = GraphiteDashboardApi::Graph.new
+    graph2.from_hash! h
+    expect(graph2.an_other_option).to eq 5
+  end
+
 end
