@@ -1,3 +1,5 @@
+require 'deep_merge'
+
 module GraphiteDashboardApi
   module ExtraOptions
     attr_accessor :extra_options
@@ -11,7 +13,8 @@ module GraphiteDashboardApi
     def extra_options_to_hash
       hash = {}
       @extra_options.each do |k,v|
-        hash[k.to_s] = v
+        extras = k.split(/_/).reverse.inject(v) { |mem,el| {el => mem } }
+        hash.deep_merge!(extras)
       end
       hash
     end

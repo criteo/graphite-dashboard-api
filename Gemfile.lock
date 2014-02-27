@@ -2,13 +2,15 @@ PATH
   remote: .
   specs:
     graphite-dashboard-api (0.1.0)
+      deep_merge
       rest-client
 
 GEM
   remote: https://rubygems.org/
   specs:
+    deep_merge (1.0.1)
     diff-lcs (1.2.5)
-    mime-types (1.25.1)
+    mime-types (2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.14.1)

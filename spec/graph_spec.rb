@@ -58,7 +58,7 @@ describe GraphiteDashboardApi::Graph do
     end
     expect(graph.an_other_option).to eq 5
     h = graph.to_hash
-    expect(h['an_other_option']).to eq 5
+    expect(h['an']['other']['option']).to eq 5
     graph2 = GraphiteDashboardApi::Graph.new
     graph2.from_hash! h
     expect(graph2.an_other_option).to eq 5

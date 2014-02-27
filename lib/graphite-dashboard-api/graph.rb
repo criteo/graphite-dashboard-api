@@ -1,4 +1,5 @@
 require 'uri'
+require 'deep_merge'
 
 module GraphiteDashboardApi
   class Graph
@@ -69,7 +70,7 @@ module GraphiteDashboardApi
         hash[k.to_s] = v if v
       end
       hash['target'] = @targets
-      hash.merge!(extra_options_to_hash)
+      hash.deep_merge!(extra_options_to_hash)
       hash
     end
 
