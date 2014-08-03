@@ -7,7 +7,7 @@ module GraphiteDashboardApi
     include ExtraOptions
 
     PROPS = [:from, :until, :width, :height]
-    [PROPS, :targets, :titles, :compact_leading].flatten.each do |a|
+    [PROPS, :targets, :title, :compact_leading].flatten.each do |a|
       attr_accessor a
       define_method(a) do |arg = nil|
       if arg
